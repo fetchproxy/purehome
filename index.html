@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>纯净乐园</title>
+    <script>
+        const sites = [{
+                name: "蝌蚪窝",
+                url: "https://www.xiaobi056.com",
+                url2: "https://www.ebay.com/usr/ke-6383",
+                email: "kedou.xxx@gmail.com",
+                video: "div.item",
+                tag: "div[class='box tags-cloud']",
+                taglist: [3, 4],
+                listnumber: 4,
+                proxy: false,
+            },
+            {
+                name: "六九堂",
+                url: "http://www.69t51.com",
+                url2: "http://69tang.cc",
+                email: "69tangdizhi@gmail.com",
+                video: "div.item",
+                tag: "div[class='box tags-cloud']",
+                taglist: [3, 4],
+                listnumber: 4,
+                proxy: true,
+            },
+            {
+                name: "久久热",
+                url: "http://www.99b32.com",
+                url2: "https://www.ebay.co.uk/usr/yi-4298/",
+                email: "99recom@gmail.com",
+                video: "div.item",
+                tag: "ul.list",
+                taglist: [3, 4],
+                listnumber: 4,
+                proxy: true,
+            }
+        ];
+    </script>
+    <style>
+        :root {
+            --back-color: rgb(30, 30, 30);
+            --card-back-color: rgb(50, 50, 50);
+            --border-color: rgba(100, 100, 100, 0.6);
+            --text-color: rgba(200, 200, 200, 0.8);
+            --border-radius: 3px;
+            --max-height: 800px;
+            --max-width: 500px;
+        }
+
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            font-size: 16px;
+            font-family: Consolas, sans-serif;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            color: var(--text-color);
+            background-color: dimgray;
+        }
+
+        .view {
+            border: solid 1px var(--border-color);
+            background-color: var(--back-color);
+            color: var(--text-color);
+            height: 100%;
+            max-height: var(--max-height);
+            width: 100%;
+            max-width: var(--max-width);
+            display: none;
+            grid-template-rows: 50px 1fr 50px;
+            overflow: auto;
+            position: relative;
+        }
+
+        .view header {
+            border-bottom: solid 1px var(--border-color);
+            padding: 10px;
+            display: grid;
+            grid-template-columns: 60px 1fr 60px 1fr;
+            grid-gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .view header span {
+            text-align: center;
+        }
+
+        .view header select {
+            font-size: 16px;
+            outline: none;
+            border: none;
+            height: 100%;
+            background-color: inherit;
+            color: inherit;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        button {
+            border: solid 1px var(--border-color);
+            background-color: var(--back-color);
+            color: var(--text-color);
+            border-radius: 3px;
+            outline: none;
+            font-weight: bold;
+        }
+
+        #main {
+            padding: 10px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 10px;
+            overflow: auto;
+        }
+
+        .card {
+            border: solid 1px var(--border-color);
+            border-radius: 3px;
+            padding: 5px;
+            height: 230px;
+            position: relative;
+            background-color: var(--card-back-color);
+        }
+
+        .card>img {
+            height: 150px;
+            width: 100%;
+            border-radius: 3px;
+        }
+
+        .card>span {
+            position: absolute;
+            font-weight: bold;
+            font-size: 0.9em;
+            top: 130px;
+            left: 10px;
+            z-index: 1;
+            color: var(--text-color);
+            opacity: 0.8;
+            background-color: var(--card-back-color);
+            border-radius: 3px;
+        }
+
+        .card>p {
+            height: 67px;
+            overflow: hidden;
+            font-size: 0.95em;
+            line-height: 1.5;
+            word-break: break-all;
+            letter-spacing: 1px;
+        }
+
+        .view footer {
+            border-top: solid 1px var(--border-color);
+            padding: 10px;
+            display: grid;
+            grid-template-columns: 40% 1fr 1fr;
+            gap: 10px;
+        }
+
+        .view footer>div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pop {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            height: 100%;
+            width: 100%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .logo {
+            height: 100%;
+            max-height: var(--max-height);
+            width: 100%;
+            max-width: var(--max-width);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .working {
+            border: solid 2px white;
+            border-radius: 3px;
+            padding: 5px;
+            background-color: black;
+            color: white;
+            height: 60px;
+            width: 80%;
+            display: grid;
+            grid-template-columns: 20% 1fr;
+            gap: 5px;
+        }
+
+        .working>div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes redo {
+            0% {
+                transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(90deg);
+                -webkit-transform: rotate(90deg);
+            }
+
+            50% {
+                transform: rotate(180deg);
+                -webkit-transform: rotate(180deg);
+            }
+
+            75% {
+                transform: rotate(90deg);
+                -webkit-transform: rotate(270deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        .error {
+            background-color: var(--back-color);
+            height: 200px;
+            width: 80%;
+            border: solid 1px var(--border-color);
+            display: grid;
+            grid-template-rows: 40px 1fr 60px;
+        }
+
+        #err_txt {
+            background-color: var(--back-color);
+            padding: 10px;
+            word-break: break-all;
+            font-weight: bold;
+            line-height: 1.75rem;
+        }
+
+        .error a {
+            color: whitesmoke;
+            text-decoration: none;
+        }
+
+        .gotopage {
+            position: absolute;
+            bottom: 52px;
+            left: 5px;
+            right: 5px;
+            height: 200px;
+            border: solid 1px var(--border-color);
+            display: grid;
+            grid-template-rows: 40px 40px 1fr 60px;
+            background-color: var(--back-color);
+        }
+
+        .gotopage>div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .gotopage button {
+            height: 100%;
+        }
+
+        .gotopage input {
+            background-color: var(--back-color);
+            border: solid 1px var(--border-color);
+            color: var(--text-color);
+            height: 100%;
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        #play p {
+            word-break: break-all;
+            font-weight: bold;
+            line-height: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        #play>div {
+            padding: 20px;
+            height: 100%;
+            width: 100%;
+            background-color: var(--back-color);
+            display: grid;
+            grid-template-rows: 80px 1fr 50px;
+            gap: 10px;
+        }
+
+        #videoc {
+            contain: strict;
+        }
+
+        #play video {
+            border-radius: 3px;
+            background-color: black;
+            height: 100%;
+            width: 100%;
+        }
+
+        #logo main {
+            background-color: var(--back-color);
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            height: 100%;
+            width: 100%;
+        }
+
+        #logo main div {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body onload="openLogo()">
+    <div class="view">
+        <header>
+            <span onclick="showBody()">房间:</span>
+            <select id="site" @change="changeSite" v-model="site" title="点选视频来源">
+                <option v-for="site in sites" :value="site.url" :data-home="site.url2" :data-email="site.email"
+                    :data-video="site.video" :data-tag="site.tag" :data-taglist="site.taglist"
+                    :data-listnumber="site.listnumber" :data-proxy="site.proxy">{{site.name}}</option>
+            </select>
+            <span>类别:</span>
+            <select id="tag" @change="changeTag" v-model="tag" title="点选视频类别">
+                <option v-for="tag in tags" :value="tag.url">{{tag.name}}</option>
+            </select>
+        </header>
+
+        <main id="main">
+            <div class="card" v-for="video in videos">
+                <img :src="video.imgs[video.imgnum]" :data-video="video.video" @click="play">
+                <span>{{video.time}}</span>
+                <p @click="changeImg" :data-index="video.index" title="点击轮播图片">{{video.text}}</p>
+                <div style="display: none;">
+                    <img v-for="img in video.imgs" :src="img">
+                </div>
+            </div>
+            <div style="height: 0.1px;"></div>
+            <div style="height: 0.1px;"></div>
+        </main>
+
+        <footer>
+            <div @click="openGotopage">
+                <span style="font-weight: bold;" title="点击打开页码跳转页面">« {{page}} ~ {{pages}} »</span>
+            </div>
+            <button @click="prePage">上 一 页</button>
+            <button @click="nextPage">下 一 页</button>
+        </footer>
+
+        <div id="gotopage" class="pop">
+            <main class="gotopage">
+                <div style="color: black;border-bottom: solid 1px black; background-color: coral;">
+                    <span>设 置 跳 转 页 码</span></div>
+                <div><span>请输入要跳转的页码 ( 1 - {{pages}} ):</span></div>
+                <div><input id="inputPage" type="number"></div>
+                <div style="display: grid;grid-template-columns: 1fr 1fr;gap: 10px;">
+                    <button @click="closeGotopage">取 消</button>
+                    <button @click="setupPage">确 定</button>
+                </div>
+            </main>
+        </div>
+
+        <div id="play" class="pop">
+            <div>
+                <p></p>
+                <div id="videoc"></div>
+                <button @click="closePlay">关 闭 播 放 窗 口</button>
+            </div>
+        </div>
+
+        <div id="error" class="pop">
+            <main class="error">
+                <div
+                    style="color:black;border-bottom: solid 1px var(--border-color); background-color: coral;display: flex;align-items: center;justify-content: center;">
+                    <span id="err_title"></span></div>
+                <p id="err_txt"></p>
+                <div style="padding: 5px; display: flex;align-items: center;justify-content: center;">
+                    <button style="width: 100%;height: 75%;" @click="closeError">关 闭 窗 口</button>
+                </div>
+            </main>
+        </div>
+
+        <div id="working" class="pop">
+            <main class="working">
+                <div>
+                    <span style="animation: redo 1.5s linear infinite;font-size: 1.5rem;">☯</span>
+                </div>
+                <div style="justify-content: left;">
+                    <span id="message"> </span>
+                </div>
+            </main>
+        </div>
+
+        <div id="iframe" class="pop"></div>
+    </div>
+    <div id="logo" class="logo">
+        <main>
+            <div style="align-items: flex-end;">
+                <p style="font-size: 3.5rem;">纯 净 乐 园 </p>
+            </div>
+            <div style="align-items: flex-start;">
+                <p style="font-size: 1.5rem;">纯 粹 极 致 观 影 体 验</p>
+            </div>
+        </main>
+    </div>
+</body>
+
+<script src="https://unpkg.com/vue@3.0.10/dist/vue.global.prod.js"></script>
+<script>
+    function openLogo() {
+        logo.style.display = "flex";
+        let timeout = setTimeout(() => {
+            closeLogo(timeout);
+        }, 4 * 1000);
+    }
+
+    function closeLogo(timeout = 0) {
+        logo.style.display = "none";
+        let view = document.querySelector(".view");
+        view.style.display = "grid";
+        clearTimeout(timeout);
+    }
+
+    function showBody() {
+        let msg = `body ${document.body.offsetHeight} * ${document.body.offsetWidth} , `;
+        msg = msg + `screen ${screen.height} * ${screen.width}`;
+        alert(msg);
+    }
+    const siteModel = {
+        name: "",
+        url: "",
+        url2: "",
+        email: "",
+        video: "div.item",
+        tag: "div[class='box tags-cloud']",
+        taglist: [3, 4],
+        listnumber: 4
+    };
+    const videoModel = [{
+        index: 0,
+        time: "time",
+        text: "",
+        imgs: [],
+        imgnum: 0,
+    }];
+    const tagModel = [{
+        name: "最新",
+        url: "latest-updates",
+    }];
+    const obj = {
+        data() {
+            return {
+                sites: sites,
+                tags: [{
+                    name: "最新",
+                    url: "latest-updates"
+                }],
+                site: sites[0].url,
+                tag: tagModel[0].url,
+                videos: [],
+                page: 1,
+                pages: 1,
+            };
+        },
+        mounted() {
+            this.get();
+        },
+        updated() {
+            closeLogo();
+        },
+        methods: {
+            nextPage(event) {
+                if (this.page < this.pages) {
+                    this.page += 1;
+                } else {
+                    this.page = 1;
+                }
+                this.get();
+            },
+            prePage(event) {
+                if (this.page > 1) {
+                    this.page--;
+                } else {
+                    this.page = this.pages;
+                }
+                this.get();
+            },
+            async getHTML(url = "", proxy = false) {
+                const run = new Promise((resolve, reject) => {
+                    if (proxy == true) {
+                        url = "https://online.getfetch.workers.dev/?url=" + url;
+                    }
+                    fetch(url, {
+                        referrer: "",
+                        referrerPolicy: "no-referrer"
+                    }).then(resp => {
+                        return resp.text();
+                    }).then(text => {
+                        resolve(text);
+                    }).catch(() => {
+                        resolve("");
+                    });
+                });
+                return await Promise.race([run, this.timeout(10)]);
+            },
+            vague() {
+                main.style.filter = "blur(3px)";
+            },
+            clear() {
+                main.style.filter = "";
+            },
+            out(...args) {
+                console.log(...args);
+            },
+            working(text = "") {
+                working.style.display = "flex";
+                message.textContent = text;
+            },
+            closeWorking() {
+                working.style.display = "none";
+                message.textContent = "";
+            },
+            select(select = "") {
+                return document.querySelector(select);
+            },
+            selectAll(select = "") {
+                return document.querySelectorAll(select);
+            },
+            getTime(duration) {
+                duration = duration.replace("时长:", "");
+                duration = duration.replace("分", "");
+                duration = duration.replace("秒", "");
+                duration = duration.trim();
+                let ss = duration.split(":");
+                let flag = 3;
+                if (ss.length == 2) {
+                    flag = 2;
+                    if (ss[0] > 60) {
+                        let left = Math.floor(ss[0] / 60);
+                        let right = ss[0] % 60;
+                        duration = left + ":" + right + ":" + ss[1];
+                        flag = 3;
+                    }
+                }
+                let reg = /\d+/g;
+                if (flag == 3) reg = /:\d+/g;
+                duration = duration.replace(reg, (s) => {
+                    if (s.length == 1) s = "0" + s;
+                    return s;
+                })
+                return "时长 ▷ " + duration;
+            },
+            async changeTag() {
+                this.page = 1;
+                await this.get();
+            },
+            async changeSite() {
+                this.tags = tagModel;
+                tag.selectedIndex = 0;
+                this.page = 1;
+                this.tag = this.tags[0].url;
+                await this.get();
+            },
+            changeImg(event) {
+                let p = event.srcElement;
+                let index = p.dataset.index;
+                if (this.videos[index].imgnum < 4) {
+                    this.videos[index].imgnum += 1;
+                } else {
+                    this.videos[index].imgnum = 0;
+                }
+            },
+            error(title = "", txt = "") {
+                window.history.pushState(null, null);
+                window.addEventListener("popstate", this.closeError, true);
+                error.style.display = "flex";
+                err_title.textContent = title;
+                err_txt.innerHTML = txt;
+            },
+            closeError() {
+                error.style.display = "none";
+            },
+            async play(event) {
+                window.history.pushState(null, null);
+                window.addEventListener("popstate", this.closePlay, true);
+                play.style.display = "flex";
+                let img = event.srcElement;
+                let card = img.parentElement;
+                let p = card.querySelector("p");
+                let title = play.querySelector("p");
+                title.textContent = p.textContent;
+                let video = document.createElement("video");
+                video.poster = img.src;
+                video.controls = true;
+                video.setAttribute("preload", "metadata");
+                video.setAttribute("x-webkit-airplay", "allow");
+                video.setAttribute("webkit-playsinline", "true");
+                video.setAttribute("playsinline", "true");
+                videoc.appendChild(video);
+                let videoID = img.dataset.video;
+                let url = site.value + "/embed/" + videoID;
+                let html = "";
+                if (site.options[site.selectedIndex].dataset.proxy == "true") {
+                    html = await this.getHTML(url, true);
+                } else {
+                    html = await this.getHTML(url);
+                }
+                if (html != "") {
+                    let src = await this.getVideo(html);
+                    video.src = src;
+                }
+            },
+            async timeout(long = 1) {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        resolve("");
+                    }, long * 1000);
+                });
+            },
+            async getVideo(html = "") {
+                let div = this.select("#iframe");
+                let iframe = document.createElement('iframe');
+                iframe.muted = true;
+                div.appendChild(iframe);
+
+                const run = new Promise((resolve, reject) => {
+                    if (html == "") resolve("");
+                    let doc = iframe.contentDocument || iframe.contentWindow.document;
+                    doc.write(html);
+                    doc.close();
+                    let t1 = setInterval(() => {
+                        let div = doc.querySelector("div[class='fp-ui']");
+                        if (div) {
+                            clearInterval(t1)
+                            div.click();
+                            let t2 = setInterval(() => {
+                                let video = doc.querySelector('video');
+                                if (video) {
+                                    clearInterval(t2);
+                                    video.muted = true;
+                                    div.click();
+                                    resolve(video.src);
+                                }
+                            }, 100);
+                        }
+                    }, 100);
+                });
+                let src = await Promise.race([run, this.timeout(10)]);
+                iframe.remove();
+                div.innerHTML = "";
+                return src;
+            },
+            closePlay() {
+                play.style.display = "none";
+                let video = play.querySelector("video");
+                video.remove();
+            },
+            openGotopage() {
+                window.history.pushState(null, null);
+                window.addEventListener("popstate", this.closeGotopage, true);
+                this.vague();
+                gotopage.style.display = "flex";
+                inputPage.value = this.page;
+            },
+            closeGotopage() {
+                this.clear();
+                gotopage.style.display = "none";
+            },
+            async setupPage() {
+                this.closeGotopage();
+                let page = parseInt(inputPage.value);
+                if (page >= 1 && page <= this.pages) {
+                    this.page = page;
+                    await this.get();
+                } else {
+                    this.error("错 误", `输入页码${page}超出有效范围.`);
+                }
+            },
+            async get() {
+                this.vague();
+                this.working("获 取 视 频 资 源 ......")
+                // 获取各个主要控件
+                let index = site.selectedIndex;
+
+                // 网络抓取内容
+                let urltxt;
+                if (sites[index].name == "AV淘宝") {
+                    urltxt = site.value + "/" + "recent" + "/"
+                } else {
+                    urltxt = site.value + "/" + tag.value + "/"
+                }
+
+                if (this.page != 1) {
+                    urltxt = urltxt + this.page + "/";
+                }
+                let htmltxt = "";
+                if (site.options[index].dataset.proxy == "true") {
+                    htmltxt = await this.getHTML(urltxt, true);
+                } else {
+                    htmltxt = await this.getHTML(urltxt);
+                }
+                let html = document.createElement('html');
+                let error = 1;
+                if (htmltxt != '') {
+                    error = 0;
+                    html.innerHTML = htmltxt;
+                    try {
+                        // 获取该类别最后一页的页号
+                        let lastPage = html.querySelector('li.last');
+                        if (lastPage != null) {
+                            let lastA = lastPage.querySelector('a');
+                            let list = lastA.dataset.parameters.split(':');
+                            this.pages = list[list.length - 1] - 1;
+                        } else {
+                            lastPage = html.querySelector("a[data-max-queries]");
+                            this.pages = lastPage.getAttribute('data-max-queries') - 1;
+                        }
+
+                        // 设置每个站点的类别关键字
+                        if (tag.children.length == 1) {
+                            let tagList = [{
+                                name: "最新",
+                                url: "latest-updates"
+                            }];
+                            let tags = html.querySelector(site.options[index].dataset.tag);
+                            for (let i = 0; i < tags.children.length - 1; i++) {
+                                let a;
+                                if (sites[index].name == "久久热") {
+                                    a = tags.children[i].querySelector("a");
+                                } else {
+                                    a = tags.children[i];
+                                }
+                                let hrefs = a.href.split("/");
+                                let items = this.sites[index].taglist;
+                                let href;
+                                items.forEach((item) => {
+                                    if (sites[index].name == "久久热") {
+                                        href = "categories/" + hrefs[item];
+                                    } else {
+                                        href = "tags/" + hrefs[item];
+                                    }
+                                })
+                                let tagOBJ = {};
+                                tagOBJ.url = href;
+                                let name = a.textContent;
+                                if (sites[index].name == "久久热") {
+                                    name = name.replace(/\d*/g, "");
+                                    name = name.substring(0, 5);
+                                }
+                                tagOBJ.name = name;
+                                tagList.push(tagOBJ);
+                            };
+                            this.tags = tagList;
+                            this.tag = this.tags[0].url;
+                        }
+
+                        // 按选择器选取元素
+                        let divs = html.querySelectorAll(site.options[index].dataset.video);
+
+                        // 每个视频容器的处理
+                        let videoList = [];
+                        let videoCount = 0;
+                        divs.forEach(div => {
+                            if (div.classList.length <= 1) {
+                                switch (sites[index].name) {
+                                    //此处可定制链接和图片的特殊方法                                    
+                                    default:
+                                        let a = div.querySelector('a');
+                                        let id = a.href.split('/')[site.options[index]
+                                            .dataset
+                                            .listnumber]
+                                        let img = div.querySelector('img');
+                                        let picNum = img.dataset['cnt'];
+                                        let picUrl = img.dataset['original'];
+                                        if (sites[index].name == "久久热") {
+                                            picNum = 5;
+                                            picUrl = img.src;
+                                        }
+                                        let duration = div.querySelector('div.duration');
+
+                                        let imgList = [];
+                                        let wz = picUrl.lastIndexOf(".");
+                                        let wz2 = picUrl.lastIndexOf("/");
+                                        let left = picUrl.substr(0, wz2 + 1);
+                                        let right = picUrl.substr(wz);
+                                        for (i = 1; i <= picNum; i++) {
+                                            imgList.push(left + i + right);
+                                        }
+
+                                        let videoOBJ = {};
+                                        videoOBJ.time = this.getTime(duration.textContent);
+                                        videoOBJ.text = a.title;
+                                        videoOBJ.imgs = imgList;
+                                        videoOBJ.imgnum = 1;
+                                        videoOBJ.index = videoCount;
+                                        videoCount += 1;
+                                        videoOBJ.video = id;
+                                        videoList.push(videoOBJ);
+                                }
+                            }
+                        });
+                        this.videos = videoList;
+                        main.scroll(0, 0);
+                        this.clear();
+                        this.closeWorking();
+                    } catch (err) {
+                        this.clear();
+                        this.closeWorking();
+                        this.error("错 误", err);
+                    }
+                    return;
+                }
+                // 获取网站信息失败
+                this.videos = [];
+                this.page = 1;
+                this.pages = 1;
+                this.clear();
+                this.closeWorking();
+                let sa = site.options[index].text;
+                let sb = site.options[index].dataset.home;
+                let err = `获取 <a target="_blank" href="${site.value}">${sa}</a> 错误`;
+                err += `<br>查看 <a target="_blank" href="${sb}">地址发布页</a>`;
+                this.error("错 误", err);
+            }
+        }
+    };
+    const app = Vue.createApp(obj).mount(".view");
+</script>
+
+</html>
