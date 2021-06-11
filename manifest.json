@@ -1,0 +1,29 @@
+{
+    "name": "Color Video Player",
+    "short_name": "Pure Home",
+    "description": "A simply video app.",
+    "display": "fullscreen",
+    "start_url": "/",
+    "theme_color": "#1e1e1e",
+    "background_color": "#1e1e1e",
+    "lang": "zh_CN",
+    "orientation": "natural",
+    "icons": [{
+        "src": "/home48.png",
+        "sizes": "48x48",
+        "type": "image/png",
+        "purpose": "any maskable"
+    },{
+        "src": "/home144.png",
+        "sizes": "144x144",
+        "type": "image/png",
+        "purpose": "any"
+    },{
+        "src": "/home512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any"
+    }],
+    "screenshots": [],
+    "categories": ["books", "education", "medical"]
+}
