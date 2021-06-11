@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
+    <base href="https://fetchproxy.github.io/purehome/" />
     <meta name="theme-color" content="#1e1e1e">
     <link rel="apple-touch-icon" href="home192.png">
     <link rel="manifest" href="manifest.json" />
@@ -872,7 +873,7 @@
     const app = Vue.createApp(obj).mount(".view");
     
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js');
+        navigator.serviceWorker.register('sw.js');
     };
 </script>
 
