@@ -3,7 +3,7 @@
     "short_name": "Pure Home",
     "description": "A simply video app.",
     "display": "fullscreen",
-    "start_url": "/",
+    "start_url": "https://fetchproxy.github.io/purehome/",
     "theme_color": "#1e1e1e",
     "background_color": "#1e1e1e",
     "lang": "zh_CN",
