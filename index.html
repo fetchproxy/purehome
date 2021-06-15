@@ -366,7 +366,7 @@
                     :data-video="site.video" :data-tag="site.tag" :data-taglist="site.taglist"
                     :data-listnumber="site.listnumber" :data-proxy="site.proxy">{{site.name}}</option>
             </select>
-            <span>类别:</span>
+            <span onclick="installapp()">类别:</span>
             <select id="tag" @change="changeTag" v-model="tag" title="点选视频类别">
                 <option v-for="tag in tags" :value="tag.url">{{tag.name}}</option>
             </select>
@@ -472,6 +472,13 @@
         msg = msg + `screen ${screen.height} * ${screen.width}`;
         alert(msg);
     }
+    
+    async function installapp() {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`user response to the install prompt:${outcome}`);
+    }
+    
     const siteModel = {
         name: "",
         url: "",
@@ -875,6 +882,13 @@
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js');
     };
+    
+    let deferredPrompt;
+    window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        console.log("'beforeinstallprompt' event was fired.")
+    });
 </script>
 
 </html>
