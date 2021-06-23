@@ -10,6 +10,7 @@ const sites = [{
     tags: "div[class='box tags-cloud'] a",
     url_tag: "{url}/tags/{tag}/{page}/",
     url_video: "{url}/embed/{video}/",
+    inplay: true,
     proxy: true
 }, {
     name: "六九堂",
@@ -23,6 +24,7 @@ const sites = [{
     tags: "div[class='box tags-cloud'] a",
     url_tag: "{url}/tags/{tag}/{page}/",
     url_video: "{url}/embed/{video}/",
+    inplay: true,
     proxy: true
 }, {
     name: "久久热",
@@ -36,12 +38,13 @@ const sites = [{
     tags: "ul.list li a",
     url_tag: "{url}/categories/{tag}/{page}/",
     url_video: "{url}/embed/{video}/",
+    inplay: true,
     proxy: true
 }, {
     name: "SOAV",
     url: "https://www.ssp56.cc",
     pub: "https://github.com/soavinfo/dizhi/wiki/1",
-    email: "",
+    email: "soavinfo@gmail.com",
     latest: "latest-updates",
     url_latest: "{url}/{latest}/{page}/",
     video: "div.item a",
@@ -49,6 +52,7 @@ const sites = [{
     tags: "div[class='box tags-cloud'] a",
     url_tag: "{url}/tags/{tag}/{page}/",
     url_video: "{url}/embed/{video}/1024",
+    inplay: false,
     proxy: true
 }, {
     name: "AV淘宝",
@@ -62,6 +66,21 @@ const sites = [{
     tags: "div[class='panel-body'] a",
     url_tag: "{url}/tag/{tag}/{page}/",
     url_video: "{url}/embed/{video}",
+    inplay: false,
+    proxy: true
+}, {
+    name: "麻花传媒",
+    url: "http://www.mahua02.com",
+    pub: "",
+    email: "",
+    latest: "latest-updates",
+    url_latest: "{url}/{latest}/{page}/",
+    video: "div.item a",
+    lastPage: "li.last a",
+    tags: "div[class='box tags-cloud'] a",
+    url_tag: "{url}/tags/{tag}/{page}/",
+    url_video: "{url}/embed/{video}/",
+    inplay: false,
     proxy: true
 }];
 
@@ -77,5 +96,6 @@ const siteModel = {
     tags: "", //类别列表
     url_tag: "{url}/tags/{tag}/{page}/", //类别页地址
     url_video: "{url}/embed/{video}/", //播放地址页
+    inplay: false, //是否在页面内播放
     proxy: false //是否使用代理
 }
