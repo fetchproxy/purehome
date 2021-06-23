@@ -148,6 +148,14 @@ const obj = {
             window.open(url, "_blank");
         },
         async play(event) {
+            switch (sites[site.value].name) {
+                case "SOAV":
+                    this.newPlay(event)
+                    return;
+                case "AV淘宝":
+                    this.newPlay(event)
+                    return;
+            }
             window.history.pushState(null, null);
             window.addEventListener("popstate", this.closePlay, true);
             play.style.display = "flex";
