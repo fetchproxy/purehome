@@ -17,9 +17,3 @@ function showBody() {
     msg = msg + `screen ${screen.height} * ${screen.width}`;
     alert(msg);
 };
-
-async function installapp() {
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    console.log(`user response to the install prompt:${outcome}`);
-};
