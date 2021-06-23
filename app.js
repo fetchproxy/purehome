@@ -148,13 +148,9 @@ const obj = {
             window.open(url, "_blank");
         },
         async play(event) {
-            switch (sites[site.value].name) {
-                case "SOAV":
-                    this.newPlay(event)
-                    return;
-                case "AV淘宝":
-                    this.newPlay(event)
-                    return;
+            if (sites[site.value].inplay == false) {
+                this.newPlay(event);
+                return;
             }
             window.history.pushState(null, null);
             window.addEventListener("popstate", this.closePlay, true);
@@ -198,18 +194,6 @@ const obj = {
 
             const run = new Promise((resolve, reject) => {
                 if (html == "") resolve("");
-                //特殊处理
-                switch (sites[site.value].name) {
-                    case "SOAV":
-                        let start = html.indexOf('/get_file/');
-                        let end = html.indexOf("',", start);
-                        let src = html.substr(start, end - start);
-                        src = sites[site.value].url + src;
-                        console.log("src", src);
-                        resolve(src);
-                        break;
-                }
-
                 let doc = iframe.contentDocument || iframe.contentWindow.document;
                 doc.write(html);
                 doc.close();
