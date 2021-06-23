@@ -34,7 +34,7 @@ const sites = [{
     video: "div.item a",
     lastPage: "li.last a",
     tags: "ul.list li a",
-    url_tag: "{url}/tags/{tag}/{page}/",
+    url_tag: "{url}/categories/{tag}/{page}/",
     url_video: "{url}/embed/{video}/",
     proxy: true
 }, {
