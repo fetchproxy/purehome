@@ -70,7 +70,7 @@ const sites = [{
     proxy: true
 }, {
     name: "麻花传媒",
-    url: "http://www.mahua02.com",
+    url: "http://www.mahua03.com",
     pub: "",
     email: "",
     latest: "latest-updates",
