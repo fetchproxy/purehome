@@ -11,6 +11,11 @@ const videoModel = [{
     imgnum: 0,
 }];
 
+const appCache = {
+    pages: {},
+    videos: {}
+};
+
 const obj = {
     data() {
         return {
@@ -172,11 +177,16 @@ const obj = {
             let url = sites[site.value].url_video;
             url = url.replace("{url}", sites[site.value].url);
             url = url.replace("{video}", videoID);
-            let html = await this.getHTML(url, sites[site.value].proxy);
-            if (html != "") {
-                let src = await this.getVideo(html);
-                console.log("video src:", src);
-                video.src = src;
+
+            if (appCache.videos[url] != undefined) {
+                video.src = appCache.videos[url];
+            } else {
+                let html = await this.getHTML(url, sites[site.value].proxy);
+                if (html != "") {
+                    let src = await this.getVideo(html);
+                    video.src = src;
+                    appCache.videos[url] = src;
+                }
             }
         },
         async timeout(long = 1) {
@@ -286,6 +296,14 @@ const obj = {
             this.working("获 取 视 频 资 源 ......")
             // 
             let url = this.getURL();
+            if (appCache.pages[url] != undefined) {
+                this.videos = appCache.pages[url];
+                main.scroll(0, 0);
+                this.clear();
+                this.closeWorking();
+                return;
+            }
+
             let html = await this.getHTML(url, sites[site.value].proxy);
             if (html == "") {
                 this.getError();
@@ -407,6 +425,7 @@ const obj = {
                 videoList.push(videoOBJ);
             });
             this.videos = videoList;
+            appCache.pages[url] = videoList;
             main.scroll(0, 0);
             this.clear();
             this.closeWorking();
