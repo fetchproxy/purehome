@@ -54,10 +54,7 @@ const obj = {
                 if (proxy == true) {
                     url = "https://online.getfetch.workers.dev/?url=" + url;
                 }
-                fetch(url, {
-                    referrer: "",
-                    referrerPolicy: "no-referrer"
-                }).then(resp => {
+                fetch(url).then(resp => {
                     let cookies = resp.headers.get("ccookie");
                     let list = cookies.split("; ");
                     list.forEach(one => {
@@ -122,13 +119,14 @@ const obj = {
             this.tags = tagModel;
             tag.selectedIndex = 0;
             this.page = 1;
-            // this.tag = this.tags[0].url;
             await this.get();
         },
         changeImg(event) {
             let p = event.srcElement;
             let index = p.dataset.index;
-            if (this.videos[index].imgnum < 4) {
+            let parent = p.parentElement;
+            let imgNumber = $$("div img", parent).length - 2;
+            if (this.videos[index].imgnum < imgNumber) {
                 this.videos[index].imgnum += 1;
             } else {
                 this.videos[index].imgnum = 0;
@@ -183,7 +181,7 @@ const obj = {
             } else {
                 let html = await this.getHTML(url, sites[site.value].proxy);
                 if (html != "") {
-                    let src = await this.getVideo(html);
+                    let src = await this.getVideoURL(html);
                     video.src = src;
                     appCache.videos[url] = src;
                 }
@@ -196,7 +194,7 @@ const obj = {
                 }, long * 1000);
             });
         },
-        async getVideo(html = "") {
+        async getVideoURL(html = "") {
             let div = $("#iframe");
             let iframe = document.createElement('iframe');
             iframe.muted = true;
@@ -259,6 +257,9 @@ const obj = {
         getError() {
             this.clear();
             this.closeWorking();
+            this.videos = [];
+            this.pages = 1;
+            this.page = 1;
             let siteName = sites[site.value].name;
             let sitePub = sites[site.value].pub;
             let siteUrl = sites[site.value].url;
@@ -276,6 +277,9 @@ const obj = {
 
             if (this.page == 1) {
                 switch (sites[site.value].name) {
+                    case "青色阁":
+                        url = url.replace("&page={page}", "");
+                        break;
                     case "AV淘宝":
                         url = url.replace("/{latest}/", "");
                         url = url.replace("{page}/", "");
@@ -290,6 +294,173 @@ const obj = {
             url = url.replace("{url}", sites[site.value].url);
             url = url.replace("{latest}", sites[site.value].latest);
             return url;
+        },
+        getLastPage(select = "", doc = null) {
+            let lastPage = $(select, doc);
+            if (lastPage == null) this.pages = 1;
+            switch (sites[site.value].name) {
+                case "青色阁":
+                    let txt = lastPage.textContent;
+                    txt = txt.trim();
+                    let qlist = txt.split("/");
+                    this.pages = qlist[1];
+                    break;
+                case "AV淘宝":
+                    let ele = lastPage.children[lastPage.children.length - 2];
+                    let a = $("a", ele);
+                    this.pages = a.textContent - 1;
+                    break;
+                default:
+                    let list = lastPage.dataset["parameters"].split(":");
+                    let pages = list[list.length - 1];
+                    this.pages = pages - 1;
+            }
+        },
+        getTags(select = "", doc = null) {
+            if (tag.children.length == 1) {
+                let tagList = [{
+                    name: "最新",
+                    url: "latest-updates"
+                }];
+                let tags = $$(select, doc);
+                if (tags == null) {
+                    this.getError();
+                    return;
+                }
+                switch (sites[site.value].name) {
+                    case "青色阁":
+                        let arrayIndex = 2;
+                        tags.forEach(tag => {
+                            if (tag.getAttribute("href") == "/") {
+                                return;
+                            }
+                            if (tag.getAttribute("href")[tag.getAttribute("href").length - 1] == "1") return;
+                            tagList.push({ name: tag.textContent, url: arrayIndex });
+                            arrayIndex++;
+                        });
+                        this.tags = tagList;
+                        break;
+                    case "SOAV":
+                        break;
+                    default:
+                        tags.forEach(tag => {
+                            let list = tag.getAttribute("href").split("/");
+                            if (list[list.length - 2] == "tags") return;
+                            switch (sites[site.value].name) {
+                                case "久久热":
+                                    let tagName = tag.innerText.replace(/\d*/g, "");
+                                    tagName = tagName.substr(0, 5);
+                                    tagList.push({ name: tagName, url: list[list.length - 2] });
+                                    break;
+                                default:
+                                    tagList.push({ name: tag.innerText, url: list[list.length - 2] });
+                            }
+                        });
+                        this.tags = tagList;
+                }
+            }
+        },
+        getVideos(select = "", doc = null) {
+            let videos = $$(select, doc);
+            if (videos == null) {
+                this.videos = [];
+                this.page = 1;
+                this.pages = 1;
+                this.getError();
+                return;
+            }
+            let videoList = [];
+            // let videoCount = 0;
+            videos.forEach(ele => {
+                let list
+                let videoID;
+                switch (sites[site.value].name) {
+                    case "青色阁":
+                        let aList = $$("a", ele);
+                        let a = aList[1];
+                        videoID = a.getAttribute("href");
+                        videoID = videoID.split("/");
+                        videoID = videoID[videoID.length - 1];
+                        break;
+                    case "SOAV":
+                        list = ele.getAttribute("href").split("/");
+                        videoID = list[list.length - 2];
+                        break;
+                    default:
+                        list = ele.getAttribute("href").split("/");
+                        videoID = list[list.length - 3];
+                }
+
+                let title;
+                switch (sites[site.value].name) {
+                    case "青色阁":
+                        let aList = $$("a", ele);
+                        let a = aList[1];
+                        title = a.children[0].textContent;
+                        break;
+                    default:
+                        title = ele.getAttribute("title");
+                }
+
+                let img;
+                let picNum;
+                let imgURL;
+                let imgList = [];
+                switch (sites[site.value].name) {
+                    case "青色阁":
+                        picNum = 0;
+                        let aList = $$("a", ele);
+                        let a = aList[0];
+                        let style = a.getAttribute("style");
+                        let start = style.lastIndexOf("http");
+                        let end = style.lastIndexOf(")");
+                        imgURL = style.substr(start, end - start);
+                        imgList.push(imgURL);
+                        break;
+                    default:
+                        img = $("img", ele);
+                        picNum = img.dataset['cnt'] || 5;
+                        imgURL = img.dataset['original'] || img.src;
+                        if (imgURL[0] == "/") {
+                            imgURL = sites[site.value].url + imgURL;
+                        }
+                        let picUrl = imgURL;
+
+
+                        let wz = picUrl.lastIndexOf(".");
+                        let wz2 = picUrl.lastIndexOf("/");
+                        let left = picUrl.substr(0, wz2 + 1);
+                        let right = picUrl.substr(wz);
+                        for (i = 1; i <= picNum; i++) {
+                            imgList.push(left + i + right);
+                        }
+                }
+
+                let duration;
+                switch (sites[site.value].name) {
+                    case "青色阁":
+                        duration = document.createElement("div");
+                        break;
+                    case "AV淘宝":
+                        duration = $("span[class='video-overlay badge transparent']", ele);
+                        break;
+                    default:
+                        duration = $("div.duration", ele);
+                }
+
+                let videoOBJ = {};
+                videoOBJ.time = this.getTime(duration.textContent);
+                videoOBJ.text = title;
+                videoOBJ.imgs = imgList;
+                videoOBJ.imgnum = 0;
+                // videoOBJ.index = videoCount;
+                // videoCount += 1;
+                videoOBJ.video = videoID;
+                videoList.push(videoOBJ);
+            });
+            this.videos = videoList;
+            appCache.pages[this.getURL()] = videoList;
+
         },
         async get() {
             this.vague();
@@ -313,119 +484,12 @@ const obj = {
             let doc = document.createElement("html");
             doc.innerHTML = html;
             //
-            let elem = $(sites[site.value].lastPage, doc);
-            if (elem != null) {
-                switch (sites[site.value].name) {
-                    case "AV淘宝":
-                        let ele = elem.children[elem.children.length - 2];
-                        let a = $("a", ele);
-                        this.pages = a.textContent - 1;
-                        break;
-                    default:
-                        let list = elem.dataset["parameters"].split(":");
-                        let pages = list[list.length - 1];
-                        this.pages = pages - 1;
-                }
-            } else {
-                this.pages = 1;
-            }
-
+            this.getLastPage(sites[site.value].lastPage, doc);
             //
-            if (tag.children.length == 1) {
-                switch (sites[site.value].name) {
-                    case "SOAV":
-                        break;
-                    default:
-                        let tagList = [{
-                            name: "最新",
-                            url: "latest-updates"
-                        }];
-                        let tags = $$(sites[site.value].tags, doc);
-                        if (tags == null) {
-                            this.getError();
-                            return;
-                        }
-                        tags.forEach(tag => {
-                            let list = tag.getAttribute("href").split("/");
-                            if (list[list.length - 2] == "tags") return;
-
-                            switch (sites[site.value].name) {
-                                case "久久热":
-                                    let tagName = tag.innerText.replace(/\d*/g, "");
-                                    tagName = tagName.substr(0, 5);
-                                    tagList.push({ name: tagName, url: list[list.length - 2] });
-                                    break;
-                                default:
-                                    tagList.push({ name: tag.innerText, url: list[list.length - 2] });
-                            }
-                        });
-                        this.tags = tagList;
-                }
-            }
-
+            this.getTags(sites[site.value].tags, doc);
             //
-            let videos = $$(sites[site.value].video, doc);
-            if (videos == null) {
-                this.videos = [];
-                this.page = 1;
-                this.pages = 1;
-                this.getError();
-                return;
-            }
-            let videoList = [];
-            let videoCount = 0;
-            videos.forEach(a => {
-                let list = a.getAttribute("href").split("/");
-                let videoID;
-                switch (sites[site.value].name) {
-                    case "SOAV":
-                        videoID = list[list.length - 2];
-                        break;
-                    default:
-                        videoID = list[list.length - 3];
-                }
-
-                let title = a.getAttribute("title");
-
-                let img = $("img", a);
-                let picNum = img.dataset['cnt'] || 5;
-                let imgURL = img.dataset['original'] || img.src;
-
-                if (imgURL[0] == "/") {
-                    imgURL = sites[site.value].url + imgURL;
-                }
-                let picUrl = imgURL;
-
-                let imgList = [];
-                let wz = picUrl.lastIndexOf(".");
-                let wz2 = picUrl.lastIndexOf("/");
-                let left = picUrl.substr(0, wz2 + 1);
-                let right = picUrl.substr(wz);
-                for (i = 1; i <= picNum; i++) {
-                    imgList.push(left + i + right);
-                }
-
-                let duration;
-                switch (sites[site.value].name) {
-                    case "AV淘宝":
-                        duration = $("span[class='video-overlay badge transparent']", a);
-                        break;
-                    default:
-                        duration = $("div.duration", a);
-                }
-
-                let videoOBJ = {};
-                videoOBJ.time = this.getTime(duration.textContent);
-                videoOBJ.text = title;
-                videoOBJ.imgs = imgList;
-                videoOBJ.imgnum = 1;
-                videoOBJ.index = videoCount;
-                videoCount += 1;
-                videoOBJ.video = videoID;
-                videoList.push(videoOBJ);
-            });
-            this.videos = videoList;
-            appCache.pages[url] = videoList;
+            this.getVideos(sites[site.value].video, doc);
+            //
             main.scroll(0, 0);
             this.clear();
             this.closeWorking();
