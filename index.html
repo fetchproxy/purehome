@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="referrer" content="no-referrer">    
+    <meta name="referrer" content="no-referrer">
     <meta name="theme-color" content="#1e1e1e">
     <link rel="apple-touch-icon" href="./home192.png">
     <link rel="manifest" href="./manifest.json" />
@@ -26,10 +26,10 @@
         </header>
 
         <main id="main">
-            <div class="card" v-for="video in videos">
+            <div class="card" v-for="(video,index) in videos">
                 <img :src="video.imgs[video.imgnum]" :data-video="video.video" @click="play">
                 <span :data-video="video.video" @click="newPlay">{{video.time}}</span>
-                <p @click="changeImg" :data-index="video.index" title="点击轮播图片">{{video.text}}</p>
+                <p @click="changeImg" :data-index="index" title="点击轮播图片">{{video.text}}</p>
                 <div style="display: none;">
                     <img v-for="img in video.imgs" :src="img">
                 </div>
