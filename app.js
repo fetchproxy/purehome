@@ -54,7 +54,9 @@ const obj = {
                 if (proxy == true) {
                     url = "https://online.getfetch.workers.dev/?url=" + url;
                 }
-                fetch(url).then(resp => {
+                fetch(url,{
+                    credentials: "include"
+                }).then(resp => {
                     let cookies = resp.headers.get("ccookie");
                     let list = cookies.split("; ");
                     list.forEach(one => {
