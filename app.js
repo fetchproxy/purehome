@@ -56,7 +56,7 @@ const obj = {
                 }
                 fetch(url).then(resp => {
                     let cookies = resp.headers.get("ccookie");
-                    console.log("cookies", cookies);
+                    // console.log("cookies", cookies);
                     setCookies(cookies);
                     return resp.text();
                 }).then(text => {
@@ -181,7 +181,7 @@ const obj = {
                 if (html != "") {
                     let src = await this.getVideoURL(html);
                     video.src = src;
-                    if (src != "") {
+                    if (src) {
                         appCache.videos[url] = src;
                     }
                 }
