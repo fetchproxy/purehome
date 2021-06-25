@@ -294,7 +294,10 @@ const obj = {
         },
         getLastPage(select = "", doc = null) {
             let lastPage = $(select, doc);
-            if (lastPage == null) this.pages = 1;
+            if (lastPage == null) {
+                this.pages = 1;
+                return;
+            }
             switch (sites[site.value].name) {
                 case "青色阁":
                     let txt = lastPage.textContent;
