@@ -80,6 +80,10 @@ const setCookies = (cookies = "") => {
                 currentCookie = name;
                 currentValue = value;
         }
-        document.cookie = currentCookie + "=" + currentValue + "; " + other;
+        if (samesiteflag) {
+            document.cookie = currentCookie + "=" + currentValue + "; " + other;
+        } else {
+            document.cookie = currentCookie + "=" + currentValue + "; SameSite=None";
+        }
     })
 }
