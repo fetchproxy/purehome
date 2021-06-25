@@ -83,7 +83,7 @@ const setCookies = (cookies = "") => {
         if (samesiteflag) {
             document.cookie = currentCookie + "=" + currentValue + "; " + other;
         } else {
-            document.cookie = currentCookie + "=" + currentValue + "; SameSite=None";
+            document.cookie = currentCookie + "=" + currentValue + "; SameSite=None; Secure";
         }
     })
 }
