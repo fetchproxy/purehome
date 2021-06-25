@@ -56,6 +56,7 @@ const obj = {
                 }
                 fetch(url).then(resp => {
                     let cookies = resp.headers.get("ccookie");
+                    console.log("cookies", cookies);
                     setCookies(cookies);
                     return resp.text();
                 }).then(text => {
@@ -180,7 +181,9 @@ const obj = {
                 if (html != "") {
                     let src = await this.getVideoURL(html);
                     video.src = src;
-                    appCache.videos[url] = src;
+                    if (src != "") {
+                        appCache.videos[url] = src;
+                    }
                 }
             }
         },
@@ -255,8 +258,6 @@ const obj = {
             this.clear();
             this.closeWorking();
             this.videos = [];
-            this.pages = 1;
-            this.page = 1;
             let siteName = sites[site.value].name;
             let sitePub = sites[site.value].pub;
             let siteUrl = sites[site.value].url;
@@ -295,7 +296,6 @@ const obj = {
         getLastPage(select = "", doc = null) {
             let lastPage = $(select, doc);
             if (lastPage == null) {
-                //this.pages = 1;
                 return;
             }
             switch (sites[site.value].name) {
@@ -364,13 +364,10 @@ const obj = {
             let videos = $$(select, doc);
             if (videos == null) {
                 this.videos = [];
-                this.page = 1;
-                this.pages = 1;
                 this.getError();
                 return;
             }
             let videoList = [];
-            // let videoCount = 0;
             videos.forEach(ele => {
                 let list
                 let videoID;
@@ -453,14 +450,13 @@ const obj = {
                 videoOBJ.text = title;
                 videoOBJ.imgs = imgList;
                 videoOBJ.imgnum = 0;
-                // videoOBJ.index = videoCount;
-                // videoCount += 1;
                 videoOBJ.video = videoID;
                 videoList.push(videoOBJ);
             });
             this.videos = videoList;
-            appCache.pages[this.getURL()] = videoList;
-
+            if (videoList.length > 0) {
+                appCache.pages[this.getURL()] = videoList;
+            }
         },
         async get() {
             this.vague();
