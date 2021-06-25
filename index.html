@@ -39,8 +39,12 @@
         </main>
 
         <footer>
-            <div @click="openGotopage">
-                <span style="font-weight: bold;" title="点击打开页码跳转页面">« {{page}} ~ {{pages}} »</span>
+            <div @click="openGotopage" style="font-weight: bold;" title="点击打开页码跳转页面">
+                <span style="margin-right: 4px;">第</span>
+                <span style="margin-right: 4px;">{{page}}</span>
+                <span style="margin-right: 4px;">页</span>
+                <span style="margin-right: 4px;">{{pages}}</span>
+                <span>页</span>
             </div>
             <button @click="prePage">上 一 页</button>
             <button @click="nextPage">下 一 页</button>
