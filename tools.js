@@ -42,3 +42,44 @@ const run = (name = "", fn, ...args) => {
         console.log(`${name}(${[...args]}) at line ${line} column ${column} : ${error.message}`);
     }
 };
+
+const setCookies = (cookies = "") => {
+    const cookieName = ["expires", "max-age", "domain", "path", "secure", "httponly", "samesite"];
+    let cookiesList = cookies.split("; ");
+    let currentCookie, currentValue, other, samesiteflag = false;
+    cookiesList.forEach(oneCookie => {
+        let [name, value] = oneCookie.split("=");
+        let lName = name.toLowerCase();
+        switch (lName) {
+            case cookieName[0]:
+                return;
+            case cookieName[1]:
+                return;
+            case cookieName[2]:
+                return;
+            case cookieName[3]:
+                return;
+            case cookieName[4]:
+                return;
+            case cookieName[5]:
+                return;
+            case cookieName[6]:
+                if (samesiteflag == true) return;
+                if (oneCookie.toLowerCase().startsWith("samesite")) {
+                    let values = oneCookie.split(",");
+                    if (values.length > 1) {
+                        other = "SameSite=None," + values[1] + "; ";
+                        samesiteflag = true;
+                    } else {
+                        other = "SameSite=None; ";
+                        samesiteflag = true;
+                    }
+                }
+                return;
+            default:
+                currentCookie = name;
+                currentValue = value;
+        }
+        document.cookie = currentCookie + "=" + currentValue + "; " + other;
+    })
+}
