@@ -295,7 +295,7 @@ const obj = {
         getLastPage(select = "", doc = null) {
             let lastPage = $(select, doc);
             if (lastPage == null) {
-                this.pages = 1;
+                //this.pages = 1;
                 return;
             }
             switch (sites[site.value].name) {
