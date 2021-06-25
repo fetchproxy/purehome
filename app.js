@@ -54,14 +54,11 @@ const obj = {
                 if (proxy == true) {
                     url = "https://online.getfetch.workers.dev/?url=" + url;
                 }
-                fetch(url,{
+                fetch(url, {
                     credentials: "include"
                 }).then(resp => {
                     let cookies = resp.headers.get("ccookie");
-                    let list = cookies.split("; ");
-                    list.forEach(one => {
-                        document.cookie = one;
-                    })
+                    setCookies(cookies);
                     return resp.text();
                 }).then(text => {
                     resolve(text);
