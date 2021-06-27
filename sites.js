@@ -66,7 +66,7 @@ const sites = [{
     tags: "div[class='panel-body'] a",
     url_tag: "{url}/tag/{tag}/{page}/",
     url_video: "{url}/embed/{video}",
-    inplay: false,
+    inplay: true,
     proxy: true
 }, {
     name: "麻花传媒",
