@@ -56,7 +56,7 @@ const obj = {
                 }
                 let request = new Request(url, { method: "GET" });
                 request.headers.set("ccookie", document.cookie);
-                fetch(url, request).then(resp => {
+                fetch(url).then(resp => {
                     let cookies = resp.headers.get("ccookie");
                     if (cookies) setCookies(cookies);
                     return resp.text();
