@@ -205,13 +205,20 @@ const obj = {
                 let doc = iframe.contentDocument || iframe.contentWindow.document;
                 doc.write(html);
                 doc.close();
-
+                let redo = 0;
                 let t1 = setInterval(() => {
+                    redo = redo + 1;
+                    if (redo == 200) {
+                        clearInterval(t1);
+                    }
                     let div = doc.querySelector("div[class='fp-ui']");
                     if (div) {
                         clearInterval(t1)
                         div.click();
+                        let redo2 = 0;
                         let t2 = setInterval(() => {
+                            redo2 = redo2 + 1;
+                            if (redo2 == 200) clearInterval(t2);
                             let video = doc.querySelector('video');
                             if (video) {
                                 clearInterval(t2);
@@ -223,7 +230,32 @@ const obj = {
                     }
                 }, 100);
             });
-            let src = await Promise.race([run, this.timeout(10)]);
+            const avtb = new Promise((resolve, reject) => {
+                if (html == "") resolve("");
+                let doc = iframe.contentDocument || iframe.contentWindow.document;
+                doc.write(html);
+                doc.close();
+                let redo = 0;
+                let t1 = setInterval(() => {
+                    redo = redo + 1;
+                    if (redo == 200) clearInterval(t1);
+                    let button = doc.querySelector('button');
+                    if (button) button.click();
+                    let video = doc.querySelector('video');
+                    if (video) {
+                        clearInterval(t1);
+                        resolve(video.src);
+                    }
+                }, 100);
+            });
+            let src;
+            switch (sites[site.value].name) {
+                case "AV淘宝":
+                    src = await Promise.race([avtb, this.timeout(10)]);
+                    break;
+                default:
+                    src = await Promise.race([run, this.timeout(10)]);
+            };
             iframe.remove();
             div.innerHTML = "";
             return src;
