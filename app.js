@@ -56,7 +56,6 @@ const obj = {
                 }
                 fetch(url).then(resp => {
                     let cookies = resp.headers.get("ccookie");
-                    // console.log("cookies", cookies);
                     setCookies(cookies);
                     return resp.text();
                 }).then(text => {
@@ -199,29 +198,31 @@ const obj = {
             let iframe = document.createElement('iframe');
             iframe.muted = true;
             div.appendChild(iframe);
+            let doc = iframe.contentDocument || iframe.contentWindow.document;
+            doc.write(html);
+            doc.close();
+            doc.cookie = document.cookie;
+            console.log("? document.cookie == iframe.cookie", doc.cookie == document.cookie);
 
             const run = new Promise((resolve, reject) => {
                 if (html == "") resolve("");
-                let doc = iframe.contentDocument || iframe.contentWindow.document;
-                doc.write(html);
-                doc.close();
                 let redo = 0;
-                let t1 = setInterval(() => {
+                let run_t1 = setInterval(() => {
                     redo = redo + 1;
                     if (redo == 200) {
-                        clearInterval(t1);
+                        clearInterval(run_t1);
                     }
                     let div = doc.querySelector("div[class='fp-ui']");
                     if (div) {
-                        clearInterval(t1)
+                        clearInterval(run_t1)
                         div.click();
                         let redo2 = 0;
-                        let t2 = setInterval(() => {
+                        let run_t2 = setInterval(() => {
                             redo2 = redo2 + 1;
-                            if (redo2 == 200) clearInterval(t2);
+                            if (redo2 == 200) clearInterval(run_t2);
                             let video = doc.querySelector('video');
                             if (video) {
-                                clearInterval(t2);
+                                clearInterval(run_t2);
                                 video.muted = true;
                                 div.click();
                                 resolve(video.src);
@@ -232,18 +233,15 @@ const obj = {
             });
             const avtb = new Promise((resolve, reject) => {
                 if (html == "") resolve("");
-                let doc = iframe.contentDocument || iframe.contentWindow.document;
-                doc.write(html);
-                doc.close();
                 let redo = 0;
-                let t1 = setInterval(() => {
+                let avtb_t1 = setInterval(() => {
                     redo = redo + 1;
-                    if (redo == 200) clearInterval(t1);
+                    if (redo == 200) clearInterval(avtb_t1);
                     let button = doc.querySelector('button');
                     if (button) button.click();
                     let video = doc.querySelector('video');
                     if (video) {
-                        clearInterval(t1);
+                        clearInterval(avtb_t1);
                         resolve(video.src);
                     }
                 }, 100);
