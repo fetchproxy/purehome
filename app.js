@@ -482,7 +482,7 @@ const obj = {
                 videoOBJ.time = this.getTime(duration.textContent);
                 videoOBJ.text = title;
                 videoOBJ.imgs = imgList;
-                videoOBJ.imgnum = 0;
+                videoOBJ.imgnum = 1;
                 videoOBJ.video = videoID;
                 videoList.push(videoOBJ);
             });
