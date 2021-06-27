@@ -54,13 +54,16 @@ const obj = {
                 if (proxy == true) {
                     url = "https://online.getfetch.workers.dev/?url=" + url;
                 }
-                fetch(url).then(resp => {
+                let request = new Request(url, { method: "GET" });
+                request.headers.set("ccookie", document.cookie);
+                fetch(url, request).then(resp => {
                     let cookies = resp.headers.get("ccookie");
-                    setCookies(cookies);
+                    if (cookies) setCookies(cookies);
                     return resp.text();
                 }).then(text => {
                     resolve(text);
-                }).catch(() => {
+                }).catch((err) => {
+                    console.error("fetch error", err);
                     resolve("");
                 });
             });
@@ -202,7 +205,7 @@ const obj = {
             doc.write(html);
             doc.close();
             doc.cookie = document.cookie;
-            console.log("? document.cookie == iframe.cookie", doc.cookie == document.cookie);
+            // console.log("? document.cookie == iframe.cookie", doc.cookie == document.cookie);
 
             const run = new Promise((resolve, reject) => {
                 if (html == "") resolve("");
