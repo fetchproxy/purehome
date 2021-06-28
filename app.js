@@ -60,7 +60,7 @@ const obj = {
                     // console.log("request.ccookie", request.headers.get("ccookie"));
                 }
 
-                fetch(url).then(resp => {
+                fetch(url, request).then(resp => {
                     let cookies = resp.headers.get("ccookie");
                     if (cookies) {
                         // console.log("response.ccookie", cookies);
