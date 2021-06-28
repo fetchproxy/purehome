@@ -55,10 +55,17 @@ const obj = {
                     url = "https://online.getfetch.workers.dev/?url=" + url;
                 }
                 let request = new Request(url, { method: "GET" });
-                request.headers.set("ccookie", document.cookie);
-                fetch(url).then(resp => {
+                if (document.cookie) {
+                    request.headers.set("ccookie", document.cookie);
+                    // console.log("request.ccookie", request.headers.get("ccookie"));
+                }
+
+                fetch(url, request).then(resp => {
                     let cookies = resp.headers.get("ccookie");
-                    if (cookies) setCookies(cookies);
+                    if (cookies) {
+                        // console.log("response.ccookie", cookies);
+                        setCookies(cookies);
+                    };
                     return resp.text();
                 }).then(text => {
                     resolve(text);
@@ -482,7 +489,7 @@ const obj = {
                 videoOBJ.time = this.getTime(duration.textContent);
                 videoOBJ.text = title;
                 videoOBJ.imgs = imgList;
-                videoOBJ.imgnum = 1;
+                videoOBJ.imgnum = 0;
                 videoOBJ.video = videoID;
                 videoList.push(videoOBJ);
             });
