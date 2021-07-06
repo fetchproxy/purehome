@@ -56,14 +56,14 @@ const obj = {
                 }
                 let request = new Request(url, { method: "GET" });
                 if (document.cookie) {
-                    request.headers.set("ccookie", document.cookie);
-                    // console.log("request.ccookie", request.headers.get("ccookie"));
+                    request.headers.set("--cookie", document.cookie);
+                    // console.log("request.--cookie", request.headers.get("--cookie"));
                 }
 
                 fetch(url, request).then(resp => {
-                    let cookies = resp.headers.get("ccookie");
+                    let cookies = resp.headers.get("--cookie");
                     if (cookies) {
-                        // console.log("response.ccookie", cookies);
+                        // console.log("response.--cookie", cookies);
                         setCookies(cookies);
                     };
                     return resp.text();
