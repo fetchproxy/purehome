@@ -1,18 +1,18 @@
 const sites = [{
-    name: "蝌蚪窝",
-    url: "https://www.xiaobi056.com",
-    pub: "https://www.ebay.com/usr/ke-6383",
-    email: "kedou.xxx@gmail.com",
-    latest: "latest-updates",
+    name: "AV淘宝",
+    url: "http://www.avtb2105.com",
+    pub: "http://www.avtbdizhi.org/",
+    email: "",
+    latest: "recent",
     url_latest: "{url}/{latest}/{page}/",
-    video: "div.item a",
-    lastPage: "li.last a",
-    tags: "div[class='box tags-cloud'] a",
-    url_tag: "{url}/tags/{tag}/{page}/",
-    url_video: "{url}/embed/{video}/",
+    video: "ul.videos li a",
+    lastPage: "ul[class='pagination pagination-lg']",
+    tags: "div[class='panel-body'] a",
+    url_tag: "{url}/tag/{tag}/{page}/",
+    url_video: "{url}/embed/{video}",
     inplay: true,
     proxy: true
-}, {
+},{
     name: "六九堂",
     url: "http://www.69t56.com",
     pub: "http://69tang.cc",
@@ -54,21 +54,7 @@ const sites = [{
     url_video: "{url}/embed/{video}/1024",
     inplay: false,
     proxy: true
-}, {
-    name: "AV淘宝",
-    url: "http://www.avtb2105.com",
-    pub: "http://www.avtbdizhi.org/",
-    email: "",
-    latest: "recent",
-    url_latest: "{url}/{latest}/{page}/",
-    video: "ul.videos li a",
-    lastPage: "ul[class='pagination pagination-lg']",
-    tags: "div[class='panel-body'] a",
-    url_tag: "{url}/tag/{tag}/{page}/",
-    url_video: "{url}/embed/{video}",
-    inplay: true,
-    proxy: true
-}, {
+},  {
     name: "麻花传媒",
     url: "http://www.mahua03.com",
     pub: "",
@@ -82,7 +68,21 @@ const sites = [{
     url_video: "{url}/embed/{video}/",
     inplay: false,
     proxy: true
-}];
+},  {
+    name: "蝌蚪窝",
+    url: "https://www.xiaobi056.com",
+    pub: "https://www.ebay.com/usr/ke-6383",
+    email: "kedou.xxx@gmail.com",
+    latest: "latest-updates",
+    url_latest: "{url}/{latest}/{page}/",
+    video: "div.item a",
+    lastPage: "li.last a",
+    tags: "div[class='box tags-cloud'] a",
+    url_tag: "{url}/tags/{tag}/{page}/",
+    url_video: "{url}/embed/{video}/",
+    inplay: true,
+    proxy: true
+}, ];
 
 const siteModel = {
     name: "", //名称
