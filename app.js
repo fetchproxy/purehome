@@ -133,10 +133,19 @@ const obj = {
             let index = p.dataset.index;
             let parent = p.parentElement;
             let imgNumber = $$("div img", parent).length - 2;
-            if (this.videos[index].imgnum < imgNumber) {
-                this.videos[index].imgnum += 1;
+            let left = event.offsetX < (p.clientWidth / 2);
+            if (left) {
+                if (this.videos[index].imgnum > 0) {
+                    this.videos[index].imgnum -= 1;
+                } else {
+                    this.videos[index].imgnum = imgNumber;
+                }
             } else {
-                this.videos[index].imgnum = 0;
+                if (this.videos[index].imgnum < imgNumber) {
+                    this.videos[index].imgnum += 1;
+                } else {
+                    this.videos[index].imgnum = 0;
+                }
             }
         },
         error(title = "", txt = "") {
