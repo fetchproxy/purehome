@@ -42,7 +42,7 @@ const sites = [{
     proxy: true
 }, {
     name: "SOAV",
-    url: "https://www.ssp56.cc",
+    url: "https://www.ssp66.xyz",
     pub: "https://github.com/soavinfo/dizhi/wiki/1",
     email: "soavinfo@gmail.com",
     latest: "latest-updates",
