@@ -495,7 +495,7 @@ const obj = {
                 }
 
                 let videoOBJ = {};
-                videoOBJ.time = this.getTime(duration.textContent);
+                videoOBJ.time = this.getTime(duration.textContent || "");
                 videoOBJ.text = title;
                 videoOBJ.imgs = imgList;
                 videoOBJ.imgnum = 0;
