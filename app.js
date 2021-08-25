@@ -491,10 +491,7 @@ const obj = {
                         duration = $("span[class='video-overlay badge transparent']", ele);
                         break;
                     default:
-                        duration = $("div.duration", ele);
-                        if (duration==null) {
-                            duration = document.createElement("div");
-                        }
+                        duration = $("div.duration", ele) || document.createElement("div");                        
                 }
 
                 let videoOBJ = {};
