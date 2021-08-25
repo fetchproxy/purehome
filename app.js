@@ -492,10 +492,13 @@ const obj = {
                         break;
                     default:
                         duration = $("div.duration", ele);
+                        if (duration==null) {
+                            duration = document.createElement("div");
+                        }
                 }
 
                 let videoOBJ = {};
-                videoOBJ.time = this.getTime(duration.textContent || "");
+                videoOBJ.time = this.getTime(duration.textContent);
                 videoOBJ.text = title;
                 videoOBJ.imgs = imgList;
                 videoOBJ.imgnum = 0;
