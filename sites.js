@@ -28,7 +28,7 @@ const sites = [{
     proxy: true
 }, {
     name: "久久热",
-    url: "http://www.99b41.com",
+    url: "http://www.99b47.com",
     pub: "https://www.ebay.co.uk/usr/yi-4298/",
     email: "99recom@gmail.com",
     latest: "latest-updates",
