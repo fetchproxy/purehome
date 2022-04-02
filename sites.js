@@ -1,6 +1,6 @@
 const sites = [{
     name: "AV淘宝",
-    url: "http://www.avtb2172.com",
+    url: "http://www.avtb2173.com",
     pub: "http://www.avtbdizhi.org/",
     email: "",
     latest: "recent",
@@ -14,7 +14,7 @@ const sites = [{
     proxy: true
 },{
     name: "六九堂",
-    url: "http://www.69t66.com",
+    url: "http://www.69t68.com",
     pub: "http://69tang.cc",
     email: "69tangdizhi@gmail.com",
     latest: "latest-updates",
