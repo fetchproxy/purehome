@@ -1,6 +1,6 @@
 const sites = [{
     name: "AV淘宝",
-    url: "http://www.avtb2173.com",
+    url: "http://www.avtb2174.com",
     pub: "http://www.avtbdizhi.org/",
     email: "",
     latest: "recent",
