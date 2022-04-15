@@ -70,7 +70,7 @@ const sites = [{
     proxy: true
 },  {
     name: "蝌蚪窝",
-    url: "http://www.xiaobi077.com",
+    url: "https://www.xiaobi077.com/?d=1",
     pub: "https://www.ebay.com/usr/ke-6383",
     email: "kedou.xxx@gmail.com",
     latest: "latest-updates",
