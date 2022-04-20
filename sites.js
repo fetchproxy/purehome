@@ -14,7 +14,7 @@ const sites = [{
     proxy: true
 },{
     name: "六九堂",
-    url: "http://www.69t68.com",
+    url: "http://www.69t71.com",
     pub: "http://69tang.cc",
     email: "69tangdizhi@gmail.com",
     latest: "latest-updates",
