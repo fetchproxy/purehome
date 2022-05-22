@@ -52,7 +52,7 @@ const obj = {
         async getHTML(url = "", proxy = false) {
             const worker = new Promise((resolve, reject) => {
                 if (proxy == true) {
-                    url = "https://online.getfetch.workers.dev/?url=" + url;
+                    // url = "https://online.getfetch.workers.dev/?url=" + url;
                 }
                 let request = new Request(url, { method: "GET" });
                 if (document.cookie) {
