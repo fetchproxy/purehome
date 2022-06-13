@@ -11,7 +11,7 @@ const sites = [{
     url_tag: "{url}/tag/{tag}/{page}/",
     url_video: "{url}/embed/{video}",
     inplay: true,
-    proxy: false
+    proxy: true
 },{
     name: "六九堂",
     url: "http://www.69t79.com",
@@ -25,7 +25,7 @@ const sites = [{
     url_tag: "{url}/tags/{tag}/{page}/",
     url_video: "{url}/embed/{video}/",
     inplay: true,
-    proxy: false
+    proxy: true
 }, {
     name: "久久热",
     url: "http://www.99b61.com",
@@ -39,7 +39,7 @@ const sites = [{
     url_tag: "{url}/categories/{tag}/{page}/",
     url_video: "{url}/embed/{video}/",
     inplay: true,
-    proxy: false
+    proxy: true
 }, {
     name: "SOAV",
     url: "https://www.ssp66.xyz",
@@ -53,7 +53,7 @@ const sites = [{
     url_tag: "{url}/tags/{tag}/{page}/",
     url_video: "{url}/embed/{video}/1024",
     inplay: false,
-    proxy: false
+    proxy: true
 },  {
     name: "麻花传媒",
     url: "http://www.mahua03.com",
@@ -67,7 +67,7 @@ const sites = [{
     url_tag: "{url}/tags/{tag}/{page}/",
     url_video: "{url}/embed/{video}/",
     inplay: false,
-    proxy: false
+    proxy: true
 },  {
     name: "蝌蚪窝",
     url: "https://www.xiaobi079.com",
