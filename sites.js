@@ -81,7 +81,7 @@ const sites = [{
     url_tag: "{url}/tags/{tag}/{page}/",
     url_video: "{url}/embed/{video}/",
     inplay: true,
-    proxy: true
+    proxy: false
 }, ];
 
 const siteModel = {
