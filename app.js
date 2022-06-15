@@ -51,14 +51,14 @@ const obj = {
         },
         async getHTML(url = "", proxy = false) {
             const worker = new Promise((resolve, reject) => {
+                let request = new Request(url, { method: "GET" });
                 if (proxy == true) {
                     url = "https://online.getfetch.workers.dev/?url=" + url;
-                }
-                let request = new Request(url, { method: "GET" });
-                if (document.cookie) {
+                    if (document.cookie) {
                     request.headers.set("--cookie", document.cookie);
                     // console.log("request.--cookie", request.headers.get("--cookie"));
                 }
+                }                
 
                 fetch(url, request).then(resp => {
                     let cookies = resp.headers.get("--cookie");
@@ -74,7 +74,7 @@ const obj = {
                     resolve("");
                 });
             });
-            return await Promise.race([worker, this.timeout(10)]);
+            return await Promise.race([worker, this.timeout(5)]);
         },
         vague() {
             main.style.filter = "blur(3px)";
