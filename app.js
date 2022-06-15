@@ -57,7 +57,7 @@ const obj = {
                     if (document.cookie) {
                     request.headers.set("--cookie", document.cookie);
                     // console.log("request.--cookie", request.headers.get("--cookie"));
-                }
+                    }
                 }                
 
                 fetch(url, request).then(resp => {
