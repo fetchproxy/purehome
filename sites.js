@@ -95,7 +95,7 @@ const sites = [{
     url_tag: "{url}/tags/{tag}/{page}/",
     url_video: "{url}/embed/{video}/1024",
     inplay: false,
-    proxy: false
+    proxy: true
 }, {
     name: "7M视频",
     url: "https://www.7mx33.com",
