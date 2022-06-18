@@ -62,7 +62,7 @@ const obj = {
                     resolve("");
                 });
             });
-            return await Promise.race([worker, this.timeout(5)]);
+            return await Promise.race([worker, this.timeout(10)]);
         },
 //         async getHTML(url = "", proxy = false) {
 //             const worker = new Promise((resolve, reject) => {
