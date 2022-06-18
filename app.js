@@ -51,21 +51,9 @@ const obj = {
         },
         async getHTML(url = "", proxy = false) {
             const worker = new Promise((resolve, reject) => {
-                let request = new Request(url, { method: "GET" });
-                if (proxy == true) {
-                    url = "https://online.getfetch.workers.dev/?url=" + url;
-                    if (document.cookie) {
-                    request.headers.set("--cookie", document.cookie);
-                    // console.log("request.--cookie", request.headers.get("--cookie"));
-                    }
-                }                
-
-                fetch(url, request).then(resp => {
-                    let cookies = resp.headers.get("--cookie");
-                    if (cookies) {
-                        // console.log("response.--cookie", cookies);
-                        setCookies(cookies);
-                    };
+                let request = new Request(PROXY, { method: "GET" });
+                request.headers.set("proxy", url);
+                fetch(proxy, request).then(resp => {
                     return resp.text();
                 }).then(text => {
                     resolve(text);
@@ -74,8 +62,35 @@ const obj = {
                     resolve("");
                 });
             });
-            return await Promise.race([worker, this.timeout(5)]);
+            return await Promise.race([worker, timeout(5)]);
         },
+//         async getHTML(url = "", proxy = false) {
+//             const worker = new Promise((resolve, reject) => {
+//                 let request = new Request(url, { method: "GET" });
+//                 if (proxy == true) {
+//                     url = "https://online.getfetch.workers.dev/?url=" + url;
+//                     if (document.cookie) {
+//                     request.headers.set("--cookie", document.cookie);
+//                     // console.log("request.--cookie", request.headers.get("--cookie"));
+//                     }
+//                 }                
+
+//                 fetch(url, request).then(resp => {
+//                     let cookies = resp.headers.get("--cookie");
+//                     if (cookies) {
+//                         // console.log("response.--cookie", cookies);
+//                         setCookies(cookies);
+//                     };
+//                     return resp.text();
+//                 }).then(text => {
+//                     resolve(text);
+//                 }).catch((err) => {
+//                     console.error("fetch error", err);
+//                     resolve("");
+//                 });
+//             });
+//             return await Promise.race([worker, this.timeout(5)]);
+//         },
         vague() {
             main.style.filter = "blur(3px)";
         },
