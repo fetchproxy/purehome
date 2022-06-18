@@ -93,7 +93,7 @@ const sites = [{
     lastPage: "li.last a",
     tags: "div[class='box'] a",
     url_tag: "{url}/tags/{tag}/{page}/",
-    url_video: "{url}/embed/{video}/",
+    url_video: "{url}/embed/{video}/1024",
     inplay: true,
     proxy: false
 },];
