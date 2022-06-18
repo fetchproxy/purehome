@@ -447,6 +447,10 @@ const obj = {
                         list = ele.getAttribute("href").split("/");
                         videoID = list[list.length - 2];
                         break;
+                    case "草客视频":
+                        list = ele.getAttribute("href").split("/");
+                        videoID = list[list.length - 2];
+                        break;    
                     default:
                         list = ele.getAttribute("href").split("/");
                         videoID = list[list.length - 3];
