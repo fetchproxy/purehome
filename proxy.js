@@ -1,0 +1,1 @@
+const PROXY = "http://localhost";
