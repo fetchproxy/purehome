@@ -50,19 +50,34 @@ const obj = {
             this.get();
         },
         async getHTML(url = "", proxy = false) {
-            const worker = new Promise((resolve, reject) => {
-                let request = new Request(PROXY, { method: "GET" });
-                request.headers.set("proxy", url);
-                fetch(PROXY, request).then(resp => {
-                    return resp.text();
-                }).then(text => {
-                    resolve(text);
-                }).catch((err) => {
-                    console.error("fetch error", err);
-                    resolve("");
+            let second = 10;
+            if (proxy) {
+                const worker = new Promise((resolve, reject) => {
+                    let request = new Request(PROXY, { method: "GET" });
+                    request.headers.set("proxy", url);
+                    fetch(PROXY, request).then(resp => {
+                        return resp.text();
+                    }).then(text => {
+                        resolve(text);
+                    }).catch((err) => {
+                        console.error("fetch error", err);
+                        resolve("");
+                    });
                 });
-            });
-            return await Promise.race([worker, this.timeout(10)]);
+                return await Promise.race([worker, this.timeout(second)]);
+            } else {
+                const worker = new Promise((resolve, reject) => {
+                    fetch(url).then(resp => {
+                        return resp.text();
+                    }).then(text => {
+                        resolve(text);
+                    }).catch((err) => {
+                        console.error("fetch error", err);
+                        resolve("");
+                    });
+                });
+                return await Promise.race([worker, this.timeout(second)]);
+            }
         },
         //         async getHTML(url = "", proxy = false) {
         //             const worker = new Promise((resolve, reject) => {
