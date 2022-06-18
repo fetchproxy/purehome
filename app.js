@@ -374,6 +374,13 @@ const obj = {
                     let a = $("a", ele);
                     this.pages = a.textContent - 1;
                     break;
+                case "7M视频":
+                    {
+                        let ele = lastPage.children[lastPage.children.length - 2];
+                        let a = $("a", ele);
+                        this.pages = a.textContent - 1;
+                        break;
+                    }
                 default:
                     let list = lastPage.dataset["parameters"].split(":");
                     let pages = list[list.length - 1];
@@ -507,6 +514,9 @@ const obj = {
                         break;
                     case "AV淘宝":
                         duration = $("span[class='video-overlay badge transparent']", ele);
+                        break;
+                    case "7M视频":
+                        duration = $("span[class='video-overlay video-duration']", ele);
                         break;
                     default:
                         duration = $("div.duration", ele) || document.createElement("div");
