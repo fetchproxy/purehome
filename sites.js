@@ -82,20 +82,6 @@ const sites = [{
     url_video: "{url}/embed/{video}/",
     inplay: true,
     proxy: false
-},  {
-    name: "草客视频",
-    url: "https://www.yaowokeke.com",
-    pub: "https://github.com/caokeshipin/dizhi/wiki/1",
-    email: "kedou.xxx@gmail.com",
-    latest: "latest-updates",
-    url_latest: "{url}/{latest}/{page}/",
-    video: "div.item a",
-    lastPage: "li.last a",
-    tags: "div[class='box'] a",
-    url_tag: "{url}/tags/{tag}/{page}/",
-    url_video: "{url}/embed/{video}/1024",
-    inplay: true,
-    proxy: false
 },];
 
 const siteModel = {
