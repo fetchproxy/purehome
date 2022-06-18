@@ -96,7 +96,21 @@ const sites = [{
     url_video: "{url}/embed/{video}/1024",
     inplay: false,
     proxy: false
-}];
+}, {
+    name: "7M视频",
+    url: "https://www.7mx33.com",
+    pub: "http://www.avtbdizhi.org/",
+    email: "",
+    latest: "recent",
+    url_latest: "{url}/{latest}/{page}/",
+    video: "ul.videos li a",
+    lastPage: "ul[class='pagination pagination-lg']",
+    tags: "div[class='panel-body'] a",
+    url_tag: "{url}/tag/{tag}/{page}/",
+    url_video: "{url}/embed/{video}",
+    inplay: false,
+    proxy: true
+},];
 
 const siteModel = {
     name: "", //名称
