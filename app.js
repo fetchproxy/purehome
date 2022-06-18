@@ -64,33 +64,33 @@ const obj = {
             });
             return await Promise.race([worker, this.timeout(10)]);
         },
-//         async getHTML(url = "", proxy = false) {
-//             const worker = new Promise((resolve, reject) => {
-//                 let request = new Request(url, { method: "GET" });
-//                 if (proxy == true) {
-//                     url = "https://online.getfetch.workers.dev/?url=" + url;
-//                     if (document.cookie) {
-//                     request.headers.set("--cookie", document.cookie);
-//                     // console.log("request.--cookie", request.headers.get("--cookie"));
-//                     }
-//                 }                
+        //         async getHTML(url = "", proxy = false) {
+        //             const worker = new Promise((resolve, reject) => {
+        //                 let request = new Request(url, { method: "GET" });
+        //                 if (proxy == true) {
+        //                     url = "https://online.getfetch.workers.dev/?url=" + url;
+        //                     if (document.cookie) {
+        //                     request.headers.set("--cookie", document.cookie);
+        //                     // console.log("request.--cookie", request.headers.get("--cookie"));
+        //                     }
+        //                 }                
 
-//                 fetch(url, request).then(resp => {
-//                     let cookies = resp.headers.get("--cookie");
-//                     if (cookies) {
-//                         // console.log("response.--cookie", cookies);
-//                         setCookies(cookies);
-//                     };
-//                     return resp.text();
-//                 }).then(text => {
-//                     resolve(text);
-//                 }).catch((err) => {
-//                     console.error("fetch error", err);
-//                     resolve("");
-//                 });
-//             });
-//             return await Promise.race([worker, this.timeout(5)]);
-//         },
+        //                 fetch(url, request).then(resp => {
+        //                     let cookies = resp.headers.get("--cookie");
+        //                     if (cookies) {
+        //                         // console.log("response.--cookie", cookies);
+        //                         setCookies(cookies);
+        //                     };
+        //                     return resp.text();
+        //                 }).then(text => {
+        //                     resolve(text);
+        //                 }).catch((err) => {
+        //                     console.error("fetch error", err);
+        //                     resolve("");
+        //                 });
+        //             });
+        //             return await Promise.race([worker, this.timeout(5)]);
+        //         },
         vague() {
             main.style.filter = "blur(3px)";
         },
@@ -447,10 +447,6 @@ const obj = {
                         list = ele.getAttribute("href").split("/");
                         videoID = list[list.length - 2];
                         break;
-                    case "草客视频":
-                        list = ele.getAttribute("href").split("/");
-                        videoID = list[list.length - 2];
-                        break;    
                     default:
                         list = ele.getAttribute("href").split("/");
                         videoID = list[list.length - 3];
@@ -462,6 +458,9 @@ const obj = {
                         let aList = $$("a", ele);
                         let a = aList[1];
                         title = a.children[0].textContent;
+                        break;
+                    case "看看之家":
+                        title = ele.children[1].textContent;
                         break;
                     default:
                         title = ele.getAttribute("title");
@@ -510,7 +509,7 @@ const obj = {
                         duration = $("span[class='video-overlay badge transparent']", ele);
                         break;
                     default:
-                        duration = $("div.duration", ele) || document.createElement("div");                        
+                        duration = $("div.duration", ele) || document.createElement("div");
                 }
 
                 let videoOBJ = {};
