@@ -1,1 +1,1 @@
-const PROXY = "https://6836-219-143-70-241.jp.ngrok.io";
+const PROXY = "https://4ece-111-203-111-3.jp.ngrok.io";
