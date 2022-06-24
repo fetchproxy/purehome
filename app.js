@@ -54,7 +54,7 @@ const obj = {
             if (proxy) {
                 const worker = new Promise((resolve, reject) => {
                     let target = PROXY + "/?url=" + url;
-                    fetch(target, request).then(resp => {
+                    fetch(target).then(resp => {
                         return resp.text();
                     }).then(text => {
                         resolve(text);
