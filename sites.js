@@ -14,7 +14,7 @@ const sites = [{
     proxy: true
 }, {
     name: "六九堂",
-    url: "https://www.69t82.com",
+    url: "https://www.69t83.com",
     pub: "http://69tang.cc",
     email: "69tangdizhi@gmail.com",
     latest: "latest-updates",
@@ -28,7 +28,7 @@ const sites = [{
     proxy: true
 }, {
     name: "久久热",
-    url: "https://www.99b61.com",
+    url: "https://www.99b63.com",
     pub: "https://www.ebay.co.uk/usr/yi-4298/",
     email: "99recom@gmail.com",
     latest: "latest-updates",
