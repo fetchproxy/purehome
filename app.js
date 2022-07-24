@@ -53,7 +53,7 @@ const obj = {
             let second = 10;
             if (proxy) {
                 const worker = new Promise((resolve, reject) => {
-                    let target = PROXY + "/?url=" + url;
+                    let target = PROXY + "/?" + url;
                     fetch(target).then(resp => {
                         return resp.text();
                     }).then(text => {
@@ -77,34 +77,7 @@ const obj = {
                 });
                 return await Promise.race([worker, this.timeout(second)]);
             }
-        },
-        //         async getHTML(url = "", proxy = false) {
-        //             const worker = new Promise((resolve, reject) => {
-        //                 let request = new Request(url, { method: "GET" });
-        //                 if (proxy == true) {
-        //                     url = "https://online.getfetch.workers.dev/?url=" + url;
-        //                     if (document.cookie) {
-        //                     request.headers.set("--cookie", document.cookie);
-        //                     // console.log("request.--cookie", request.headers.get("--cookie"));
-        //                     }
-        //                 }                
-
-        //                 fetch(url, request).then(resp => {
-        //                     let cookies = resp.headers.get("--cookie");
-        //                     if (cookies) {
-        //                         // console.log("response.--cookie", cookies);
-        //                         setCookies(cookies);
-        //                     };
-        //                     return resp.text();
-        //                 }).then(text => {
-        //                     resolve(text);
-        //                 }).catch((err) => {
-        //                     console.error("fetch error", err);
-        //                     resolve("");
-        //                 });
-        //             });
-        //             return await Promise.race([worker, this.timeout(5)]);
-        //         },
+        },       
         vague() {
             main.style.filter = "blur(3px)";
         },
