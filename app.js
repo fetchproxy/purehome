@@ -53,7 +53,7 @@ const obj = {
             let second = 10;
             if (proxy) {
                 const worker = new Promise((resolve, reject) => {
-                    let target = PROXY + "/" + url;
+                    let target = PROXY + "/?" + url;
                     fetch(target).then(resp => {
                         return resp.text();
                     }).then(text => {
